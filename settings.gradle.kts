@@ -1,2 +1,3 @@
 rootProject.name = "CommonJudgeSystem"
-include("library")
+include(":library")
+include(":example:server")
