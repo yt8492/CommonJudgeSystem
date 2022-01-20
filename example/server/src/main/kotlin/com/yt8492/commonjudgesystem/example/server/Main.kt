@@ -20,7 +20,7 @@ fun main() {
         displayName = "ほげ",
     )
     val createUserExecutor = CreateUserExecutor(client, userDB)
-    val testCase = TestCase(
+    val createUserSuccessTestCase = TestCase(
         input = CreateUserInput(
             json = createUserRequestJson,
         ),
@@ -45,7 +45,32 @@ fun main() {
             }
         }
     }
-    when (val createUserTestResult = testCase.execute()) {
+    val usernameDuplicatedTestCase = TestCase(
+        input = CreateUserInput(
+            json = createUserRequestJson,
+        ),
+        applicationExecutor = createUserExecutor,
+    ) { res ->
+        when (res) {
+            is ApplicationResult.Success -> {
+                TestResult.Failure("すでに存在するusernameでユーザーの作成に成功してしまっています")
+            }
+            is ApplicationResult.Failure -> {
+                when (res.result) {
+                    is CreateUserError.AlreadyExist -> {
+                        TestResult.Success
+                    }
+                    is CreateUserError.UserNotFound -> {
+                        TestResult.Failure("ユーザーがDBに登録されていません")
+                    }
+                    is CreateUserError.Unknown -> {
+                        TestResult.Failure("不明なエラー")
+                    }
+                }
+            }
+        }
+    }
+    when (val createUserTestResult = createUserSuccessTestCase.execute()) {
         is TestResult.Success -> {
             println("ユーザー登録に成功しました")
         }
