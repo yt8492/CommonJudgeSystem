@@ -78,4 +78,12 @@ fun main() {
             println(createUserTestResult.message)
         }
     }
+    when (val usernameDuplicatedTestResult = usernameDuplicatedTestCase.execute()) {
+        is TestResult.Success -> {
+            println("ユーザー名が既に使われている場合にユーザー登録が正常に失敗しました")
+        }
+        is TestResult.Failure -> {
+            println(usernameDuplicatedTestResult.message)
+        }
+    }
 }
