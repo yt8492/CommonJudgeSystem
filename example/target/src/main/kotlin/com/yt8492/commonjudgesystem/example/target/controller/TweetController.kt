@@ -25,7 +25,15 @@ fun Routing.tweetController(
             }
             val request = call.receive<CreateTweetRequestJson>()
             val tweet = tweetDB.create(userId, request.content)
-            val json = TweetJson(tweet.id, tweet.userId, tweet.username, tweet.displayName, tweet.content)
+            val json = TweetJson(
+                id = tweet.id,
+                user = UserJson(
+                    id = tweet.userId,
+                    username = tweet.username,
+                    displayName = tweet.displayName,
+                ),
+                content = tweet.content,
+            )
             call.respond(json)
         }
 
@@ -55,13 +63,15 @@ fun Routing.tweetController(
     }
 
     get("/tweets") {
-        val tweets = tweetDB.getAll().map {
+        val tweets = tweetDB.getAll().map { tweet ->
             TweetJson(
-                id = it.id,
-                userId = it.userId,
-                username = it.username,
-                displayName = it.displayName,
-                content = it.content,
+                id = tweet.id,
+                user = UserJson(
+                    id = tweet.userId,
+                    username = tweet.username,
+                    displayName = tweet.displayName,
+                ),
+                content = tweet.content,
             )
         }
         call.respond(tweets)
@@ -78,7 +88,15 @@ fun Routing.tweetController(
             call.respond(HttpStatusCode.NotFound)
             return@get
         }
-        val json = TweetJson(tweet.id, tweet.userId, tweet.username, tweet.displayName, tweet.content)
+        val json = TweetJson(
+            id = tweet.id,
+            user = UserJson(
+                id = tweet.userId,
+                username = tweet.username,
+                displayName = tweet.displayName,
+            ),
+            content = tweet.content,
+        )
         call.respond(json)
     }
 }

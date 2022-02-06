@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TweetJson(
     val id: Int,
-    val userId: Int,
-    val username: String,
-    val displayName: String,
+    val user: UserJson,
     val content: String,
 )
