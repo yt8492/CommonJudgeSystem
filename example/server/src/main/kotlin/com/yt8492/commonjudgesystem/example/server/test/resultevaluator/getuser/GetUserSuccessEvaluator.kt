@@ -16,7 +16,7 @@ fun getUserSuccessEvaluator(
         is ApplicationResult.Failure -> {
             when (result.result) {
                 is GetUserError.UserNotFound -> {
-                    TestResult.Failure("Get user information from server failed")
+                    TestResult.Failure("Get user information from server failed.")
                 }
                 is GetUserError.UnexpectedJson -> {
                     TestResult.Failure("Response JSON format is not correct.")
