@@ -8,7 +8,7 @@ import com.yt8492.commonjudgesystem.library.TestResult
 
 fun usernameDuplicatedEvaluator(
     result: ApplicationResult<CreateUserOutput, CreateUserSideEffect, CreateUserError>,
-): TestResult {
+): TestResult<Unit> {
     return when (result) {
         is ApplicationResult.Success -> {
             TestResult.Failure("Duplicated username registration successfully failed.")
@@ -16,7 +16,7 @@ fun usernameDuplicatedEvaluator(
         is ApplicationResult.Failure -> {
             when (result.result) {
                 is CreateUserError.AlreadyExist -> {
-                    TestResult.Success("Duplicated username registration should be failed but succeed.")
+                    TestResult.Success("Duplicated username registration should be failed but succeed.", Unit)
                 }
                 is CreateUserError.UserNotFound -> {
                     TestResult.Failure("User not saved in database.")

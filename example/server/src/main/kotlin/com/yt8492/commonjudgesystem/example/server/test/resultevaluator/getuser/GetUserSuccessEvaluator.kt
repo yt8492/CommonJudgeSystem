@@ -8,10 +8,10 @@ import com.yt8492.commonjudgesystem.library.TestResult
 
 fun getUserSuccessEvaluator(
     result: ApplicationResult<GetUserOutput, EmptySideEffect, GetUserError>,
-): TestResult {
+): TestResult<GetUserOutput> {
     return when (result) {
         is ApplicationResult.Success -> {
-            TestResult.Success("Get user information has been succeed.")
+            TestResult.Success("Get user information has been succeed.", result.output)
         }
         is ApplicationResult.Failure -> {
             when (result.result) {

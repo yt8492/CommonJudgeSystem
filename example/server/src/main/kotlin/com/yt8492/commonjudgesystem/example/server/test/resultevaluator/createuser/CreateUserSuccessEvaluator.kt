@@ -8,10 +8,10 @@ import com.yt8492.commonjudgesystem.library.TestResult
 
 fun createUserSuccessEvaluator(
     result: ApplicationResult<CreateUserOutput, CreateUserSideEffect, CreateUserError>,
-): TestResult {
+): TestResult<CreateUserOutput> {
     return when (result) {
         is ApplicationResult.Success -> {
-            TestResult.Success("User Registration has been succeed.")
+            TestResult.Success("User Registration has been succeed.", result.output)
         }
         is ApplicationResult.Failure -> {
             when (result.result) {
