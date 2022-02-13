@@ -21,7 +21,7 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
-    embeddedServer(Netty, 8080) {
+    embeddedServer(Netty, 3000) {
         val database = Database.connect("jdbc:sqlite:twitter.db")
         transaction {
             SchemaUtils.create(UserTable, TweetTable)
