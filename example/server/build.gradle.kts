@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization") version "1.6.10"
@@ -28,4 +30,20 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:0.34.1")
     runtimeOnly("org.xerial:sqlite-jdbc:3.36.0.3")
     runtimeOnly("org.slf4j:slf4j-simple:1.7.32")
+}
+
+val copyJar by tasks.registering {
+    doLast {
+        copy {
+            val destinationDir = File("$rootDir/example/target")
+            val jarDir = File("$buildDir/libs")
+            from(jarDir)
+            into(destinationDir)
+        }
+    }
+}
+
+tasks.withType<ShadowJar> {
+    archiveFileName.set("JudgeScript.jar")
+    finalizedBy(copyJar)
 }

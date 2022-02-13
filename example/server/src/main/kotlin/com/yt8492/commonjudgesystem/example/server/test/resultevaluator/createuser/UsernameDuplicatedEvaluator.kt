@@ -11,12 +11,12 @@ fun usernameDuplicatedEvaluator(
 ): TestResult<Unit> {
     return when (result) {
         is ApplicationResult.Success -> {
-            TestResult.Failure("Duplicated username registration successfully failed.")
+            TestResult.Failure("Duplicated username registration should be failed but succeed.")
         }
         is ApplicationResult.Failure -> {
             when (result.result) {
                 is CreateUserError.AlreadyExist -> {
-                    TestResult.Success("Duplicated username registration should be failed but succeed.", Unit)
+                    TestResult.Success("Duplicated username registration successfully failed.", Unit)
                 }
                 is CreateUserError.UserNotFound -> {
                     TestResult.Failure("User not saved in database.")

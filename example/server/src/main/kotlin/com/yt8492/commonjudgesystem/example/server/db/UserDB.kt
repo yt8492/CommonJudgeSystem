@@ -21,6 +21,20 @@ class UserDB(
         }
     }
 
+    fun getUserById(userId: Int,): User? {
+        return transaction {
+            Users.select { Users.id eq userId }
+                .firstOrNull()
+                ?.let {
+                    User(
+                        id = it[Users.id].value,
+                        username = it[Users.username],
+                        displayName = it[Users.displayName],
+                    )
+                }
+        }
+    }
+
     fun getUserByUsername(username: String): User? {
         return transaction {
             Users.select { Users.username eq username }

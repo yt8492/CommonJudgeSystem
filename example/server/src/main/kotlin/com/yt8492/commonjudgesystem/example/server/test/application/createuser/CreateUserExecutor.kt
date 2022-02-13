@@ -6,7 +6,7 @@ import com.yt8492.commonjudgesystem.example.server.http.json.CreateUserResponseJ
 import com.yt8492.commonjudgesystem.library.ApplicationExecutor
 import com.yt8492.commonjudgesystem.library.ApplicationResult
 import io.ktor.client.HttpClient
-import io.ktor.client.features.ServerResponseException
+import io.ktor.client.features.ClientRequestException
 import io.ktor.client.request.post
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerializationException
@@ -27,7 +27,7 @@ class CreateUserExecutor(
             }
             val user = userDB.getUserByUsername(input.username) ?: return@runBlocking ApplicationResult.Failure(CreateUserError.UserNotFound)
             return@runBlocking ApplicationResult.Success(CreateUserOutput(response.token), CreateUserSideEffect(user))
-        } catch (e: ServerResponseException) {
+        } catch (e: ClientRequestException) {
             if (e.response.status.value == 409) {
                 return@runBlocking ApplicationResult.Failure(CreateUserError.AlreadyExist)
             }

@@ -21,7 +21,9 @@ fun Routing.userController(
 ) {
     post("/users") {
         val request = call.receive<CreateUserRequestJson>()
-        if (userDB.getByUsername(request.username) != null) {
+        val existingUser = userDB.getByUsername(request.username)
+        if (existingUser != null) {
+            println(existingUser)
             call.respond(HttpStatusCode.Conflict)
             return@post
         }

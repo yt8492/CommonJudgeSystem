@@ -5,7 +5,7 @@ import com.yt8492.commonjudgesystem.library.ApplicationExecutor
 import com.yt8492.commonjudgesystem.library.ApplicationResult
 import com.yt8492.commonjudgesystem.library.EmptySideEffect
 import io.ktor.client.HttpClient
-import io.ktor.client.features.ServerResponseException
+import io.ktor.client.features.ClientRequestException
 import io.ktor.client.request.get
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerializationException
@@ -18,7 +18,7 @@ class GetTweetExecutor(
         try {
             val response = httpClient.get<TweetJson>("/tweets/${input.tweetId}")
             return@runBlocking ApplicationResult.Success(GetTweetOutput(response), EmptySideEffect)
-        } catch (e: ServerResponseException) {
+        } catch (e: ClientRequestException) {
             if (e.response.status.value == 404) {
                 return@runBlocking ApplicationResult.Failure(GetTweetError.TweetNotFound)
             } else {

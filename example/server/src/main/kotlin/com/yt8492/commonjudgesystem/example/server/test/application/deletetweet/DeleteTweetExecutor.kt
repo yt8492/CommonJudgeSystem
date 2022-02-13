@@ -6,7 +6,7 @@ import com.yt8492.commonjudgesystem.library.ApplicationResult
 import com.yt8492.commonjudgesystem.library.EmptyOutput
 import com.yt8492.commonjudgesystem.library.EmptySideEffect
 import io.ktor.client.HttpClient
-import io.ktor.client.features.ServerResponseException
+import io.ktor.client.features.ClientRequestException
 import io.ktor.client.request.delete
 import io.ktor.client.request.header
 import io.ktor.client.statement.HttpResponse
@@ -27,7 +27,7 @@ class DeleteTweetExecutor(
                 return@runBlocking ApplicationResult.Failure(DeleteTweetError.TweetNotDeleted)
             }
             return@runBlocking ApplicationResult.Success(EmptyOutput, EmptySideEffect)
-        } catch (e: ServerResponseException) {
+        } catch (e: ClientRequestException) {
             when (e.response.status.value) {
                 401 -> {
                     return@runBlocking ApplicationResult.Failure(DeleteTweetError.Unauthorized)

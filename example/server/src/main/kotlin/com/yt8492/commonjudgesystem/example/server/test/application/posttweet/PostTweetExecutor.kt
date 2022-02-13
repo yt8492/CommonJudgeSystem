@@ -6,7 +6,7 @@ import com.yt8492.commonjudgesystem.example.server.http.json.TweetJson
 import com.yt8492.commonjudgesystem.library.ApplicationExecutor
 import com.yt8492.commonjudgesystem.library.ApplicationResult
 import io.ktor.client.HttpClient
-import io.ktor.client.features.ServerResponseException
+import io.ktor.client.features.ClientRequestException
 import io.ktor.client.request.header
 import io.ktor.client.request.post
 import kotlinx.coroutines.runBlocking
@@ -41,7 +41,7 @@ class PostTweetExecutor(
             return@runBlocking ApplicationResult.Failure(PostTweetError.InvalidResponse)
         } catch (e: ConnectException) {
             return@runBlocking ApplicationResult.Failure(PostTweetError.ConnectionRefused)
-        } catch (e: ServerResponseException) {
+        } catch (e: ClientRequestException) {
             if (e.response.status.value == 401) {
                 return@runBlocking ApplicationResult.Failure(PostTweetError.Unauthorized)
             }

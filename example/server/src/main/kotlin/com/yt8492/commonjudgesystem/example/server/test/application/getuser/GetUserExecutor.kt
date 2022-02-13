@@ -5,7 +5,7 @@ import com.yt8492.commonjudgesystem.library.ApplicationExecutor
 import com.yt8492.commonjudgesystem.library.ApplicationResult
 import com.yt8492.commonjudgesystem.library.EmptySideEffect
 import io.ktor.client.HttpClient
-import io.ktor.client.features.ServerResponseException
+import io.ktor.client.features.ClientRequestException
 import io.ktor.client.request.get
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.SerializationException
@@ -18,7 +18,7 @@ class GetUserExecutor(
         try {
             val user = httpClient.get<UserJson>("/users/${input.username}")
             return@runBlocking ApplicationResult.Success(GetUserOutput(user), EmptySideEffect)
-        } catch (e: ServerResponseException) {
+        } catch (e: ClientRequestException) {
             if (e.response.status.value == 404) {
                 return@runBlocking ApplicationResult.Failure(GetUserError.UserNotFound)
             } else {
