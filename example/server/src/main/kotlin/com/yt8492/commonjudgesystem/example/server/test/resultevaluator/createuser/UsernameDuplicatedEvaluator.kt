@@ -11,24 +11,24 @@ fun usernameDuplicatedEvaluator(
 ): TestResult {
     return when (result) {
         is ApplicationResult.Success -> {
-            TestResult.Failure("ユーザー名が既に使われている場合にユーザー登録が正常に失敗しました")
+            TestResult.Failure("Duplicated username registration successfully failed.")
         }
         is ApplicationResult.Failure -> {
             when (result.result) {
                 is CreateUserError.AlreadyExist -> {
-                    TestResult.Success("すでに存在するusernameでユーザーの作成に成功してしまっています")
+                    TestResult.Success("Duplicated username registration should be failed but succeed.")
                 }
                 is CreateUserError.UserNotFound -> {
-                    TestResult.Failure("ユーザーがDBに登録されていません")
+                    TestResult.Failure("User not saved in database.")
                 }
                 is CreateUserError.UnexpectedJson -> {
-                    TestResult.Failure("レスポンスのJSONの形式が不正です")
+                    TestResult.Failure("Response JSON format is not correct.")
                 }
                 is CreateUserError.ConnectionRefused -> {
-                    TestResult.Failure("サーバーに接続できません")
+                    TestResult.Failure("Connection refused.")
                 }
                 is CreateUserError.Unknown -> {
-                    TestResult.Failure("不明なエラー")
+                    TestResult.Failure("Unknown error.")
                 }
             }
         }

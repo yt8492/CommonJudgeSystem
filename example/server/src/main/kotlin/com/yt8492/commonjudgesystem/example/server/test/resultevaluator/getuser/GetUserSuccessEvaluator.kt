@@ -11,21 +11,21 @@ fun getUserSuccessEvaluator(
 ): TestResult {
     return when (result) {
         is ApplicationResult.Success -> {
-            TestResult.Success("ユーザー情報の取得に成功しました")
+            TestResult.Success("Get user information has been succeed.")
         }
         is ApplicationResult.Failure -> {
             when (result.result) {
                 is GetUserError.UserNotFound -> {
-                    TestResult.Failure("ユーザーが取得できませんでした")
+                    TestResult.Failure("Get user information from server failed")
                 }
                 is GetUserError.UnexpectedJson -> {
-                    TestResult.Failure("レスポンスのJSONの形式が不正です")
+                    TestResult.Failure("Response JSON format is not correct.")
                 }
                 is GetUserError.ConnectionRefused -> {
-                    TestResult.Failure("サーバーに接続できません")
+                    TestResult.Failure("Connection refused.")
                 }
                 is GetUserError.Unknown -> {
-                    TestResult.Failure("不明なエラー")
+                    TestResult.Failure("Unknown error.")
                 }
             }
         }

@@ -23,7 +23,7 @@ fun main() {
     val userDB = UserDB(database)
     val createUserInput = CreateUserInput(
         username = "hoge",
-        displayName = "ほげ",
+        displayName = "fuga",
         password = "hogehoge"
     )
     val createUserExecutor = CreateUserExecutor(client, userDB)
@@ -48,7 +48,7 @@ fun main() {
     val createUserSuccessTestResult = createUserSuccessTestCase.execute()
     println(createUserSuccessTestResult.message)
     if (createUserSuccessTestResult is TestResult.Failure) {
-        println("以降のテストはスキップされました")
+        println("Subsequent tests were skipped.")
         return
     }
     val usernameDuplicatedTestResult = usernameDuplicatedTestCase.execute()
