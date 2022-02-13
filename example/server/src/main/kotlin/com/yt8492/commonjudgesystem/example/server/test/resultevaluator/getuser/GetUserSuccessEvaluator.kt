@@ -21,6 +21,9 @@ fun getUserSuccessEvaluator(
                 is GetUserError.UnexpectedJson -> {
                     TestResult.Failure("レスポンスのJSONの形式が不正です")
                 }
+                is GetUserError.ConnectionRefused -> {
+                    TestResult.Failure("サーバーに接続できません")
+                }
                 is GetUserError.Unknown -> {
                     TestResult.Failure("不明なエラー")
                 }
