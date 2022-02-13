@@ -1,4 +1,4 @@
-package com.yt8492.commonjudgesystem.example.server.test.resultevaluator
+package com.yt8492.commonjudgesystem.example.server.test.resultevaluator.gettweet
 
 import com.yt8492.commonjudgesystem.example.server.test.application.gettweet.GetTweetError
 import com.yt8492.commonjudgesystem.example.server.test.application.gettweet.GetTweetOutput

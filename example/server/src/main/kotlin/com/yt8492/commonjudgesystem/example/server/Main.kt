@@ -4,15 +4,12 @@ import com.yt8492.commonjudgesystem.example.server.db.TweetDB
 import com.yt8492.commonjudgesystem.library.TestCase
 import com.yt8492.commonjudgesystem.example.server.db.UserDB
 import com.yt8492.commonjudgesystem.example.server.http.client.HttpClientFactory
-import com.yt8492.commonjudgesystem.example.server.http.json.CreateUserRequestJson
-import com.yt8492.commonjudgesystem.example.server.test.application.createuser.CreateUserError
 import com.yt8492.commonjudgesystem.example.server.test.application.createuser.CreateUserExecutor
 import com.yt8492.commonjudgesystem.example.server.test.application.createuser.CreateUserInput
 import com.yt8492.commonjudgesystem.example.server.test.application.deletetweet.DeleteTweetExecutor
 import com.yt8492.commonjudgesystem.example.server.test.application.deletetweet.DeleteTweetInput
 import com.yt8492.commonjudgesystem.example.server.test.application.gettweet.GetTweetExecutor
 import com.yt8492.commonjudgesystem.example.server.test.application.gettweet.GetTweetInput
-import com.yt8492.commonjudgesystem.example.server.test.application.getuser.GetUserError
 import com.yt8492.commonjudgesystem.example.server.test.application.getuser.GetUserExecutor
 import com.yt8492.commonjudgesystem.example.server.test.application.getuser.GetUserInput
 import com.yt8492.commonjudgesystem.example.server.test.application.posttweet.PostTweetExecutor
@@ -20,10 +17,9 @@ import com.yt8492.commonjudgesystem.example.server.test.application.posttweet.Po
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.createuser.createUserSuccessEvaluator
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.createuser.usernameDuplicatedEvaluator
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.deletetweet.deleteTweetSuccessEvaluator
-import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.getTweetSuccessEvaluator
+import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.gettweet.getTweetSuccessEvaluator
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.getuser.getUserSuccessEvaluator
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.posttweet.postTweetSuccessEvaluator
-import com.yt8492.commonjudgesystem.library.ApplicationResult
 import com.yt8492.commonjudgesystem.library.TestResult
 import org.jetbrains.exposed.sql.Database
 
