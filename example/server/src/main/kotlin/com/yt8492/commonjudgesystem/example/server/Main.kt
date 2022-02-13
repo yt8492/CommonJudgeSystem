@@ -8,6 +8,8 @@ import com.yt8492.commonjudgesystem.example.server.http.json.CreateUserRequestJs
 import com.yt8492.commonjudgesystem.example.server.test.application.createuser.CreateUserError
 import com.yt8492.commonjudgesystem.example.server.test.application.createuser.CreateUserExecutor
 import com.yt8492.commonjudgesystem.example.server.test.application.createuser.CreateUserInput
+import com.yt8492.commonjudgesystem.example.server.test.application.deletetweet.DeleteTweetExecutor
+import com.yt8492.commonjudgesystem.example.server.test.application.deletetweet.DeleteTweetInput
 import com.yt8492.commonjudgesystem.example.server.test.application.gettweet.GetTweetExecutor
 import com.yt8492.commonjudgesystem.example.server.test.application.gettweet.GetTweetInput
 import com.yt8492.commonjudgesystem.example.server.test.application.getuser.GetUserError
@@ -17,6 +19,7 @@ import com.yt8492.commonjudgesystem.example.server.test.application.posttweet.Po
 import com.yt8492.commonjudgesystem.example.server.test.application.posttweet.PostTweetInput
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.createuser.createUserSuccessEvaluator
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.createuser.usernameDuplicatedEvaluator
+import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.deletetweet.deleteTweetSuccessEvaluator
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.getTweetSuccessEvaluator
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.getuser.getUserSuccessEvaluator
 import com.yt8492.commonjudgesystem.example.server.test.resultevaluator.posttweet.postTweetSuccessEvaluator
@@ -65,7 +68,8 @@ fun main() {
     println(getUserSuccessTestResult.message)
 
     val postTweetExecutor = PostTweetExecutor(client, tweetDB)
-    val postTweetInput = PostTweetInput(createUserSuccessTestResult.additionalData.token, "hello world")
+    val token = createUserSuccessTestResult.additionalData.token
+    val postTweetInput = PostTweetInput(token, "hello world")
     val postTweetSuccessTestCase = TestCase(
         input = postTweetInput,
         applicationExecutor = postTweetExecutor,
@@ -74,7 +78,8 @@ fun main() {
     val postTweetSuccessTestResult = postTweetSuccessTestCase.execute()
     println(postTweetSuccessTestResult.message)
     if (postTweetSuccessTestResult is TestResult.Success) {
-        val getTweetInput = GetTweetInput(postTweetSuccessTestResult.additionalData.tweet.id)
+        val tweetId = postTweetSuccessTestResult.additionalData.tweet.id
+        val getTweetInput = GetTweetInput(tweetId)
         val getTweetExecutor = GetTweetExecutor(client)
         val getTweetSuccessTestCase = TestCase(
             input = getTweetInput,
@@ -83,5 +88,16 @@ fun main() {
         )
         val getTweetSuccessTestResult = getTweetSuccessTestCase.execute()
         println(getTweetSuccessTestResult.message)
+        val deleteTweetInput = DeleteTweetInput(token, tweetId)
+        val deleteTweetExecutor = DeleteTweetExecutor(client, tweetDB)
+        val deleteTweetSuccessTestCase = TestCase(
+            input = deleteTweetInput,
+            applicationExecutor = deleteTweetExecutor,
+            resultEvaluator = ::deleteTweetSuccessEvaluator,
+        )
+        val deleteTweetSuccessTestResult = deleteTweetSuccessTestCase.execute()
+        println(deleteTweetSuccessTestResult.message)
+    } else {
+        println("Subsequent tweet tests were skipped.")
     }
 }
